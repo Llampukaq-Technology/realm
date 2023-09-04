@@ -1,0 +1,12 @@
+styles
+components
+pages
+public
+realm
+next.config.js
+postcss.config.js
+tailwind.config.ts
+tsconfig.json
+tsconfig-components.json
+.next
+next-env.d.ts
