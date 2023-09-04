@@ -1,7 +1,8 @@
 import React, { ReactNode, createContext, useEffect, useState } from "react";
 import { App, User } from "realm-web";
-import RenderPlugins from "../components/RenderPlugins";
+
 import { useCache, useClearCache } from "react-cache-state";
+import { RenderPlugins } from "..";
 export const RealmContext = createContext({});
 export interface user {
   created: Date;
@@ -12,6 +13,7 @@ export interface user {
 }
 export interface RealmContext<T = any> {
   isLogin: boolean | undefined;
+  setUserRealm: () => void;
   user: (user & T) | undefined;
   Error401: React.ReactNode;
   setUser: (value: any) => void;
@@ -87,6 +89,7 @@ function RealmProvider<T>({
     logout,
     userRealm,
     app,
+    setUserRealm,
   };
   return (
     <RealmContext.Provider value={data}>

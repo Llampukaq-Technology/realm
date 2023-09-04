@@ -1,4 +1,5 @@
+export * from "./hooks";
+export * from "./components";
 import RealmProvider from "./context/RealmProvider";
-import useApp from "./hooks/useApp";
 export { Credentials, User } from "realm-web";
-export { useApp, RealmProvider };
+export { RealmProvider };

@@ -1,5 +1,4 @@
 styles
-components
 pages
 public
 realm
@@ -10,3 +9,4 @@ tsconfig.json
 tsconfig-components.json
 .next
 next-env.d.ts
+.env.local

@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
 import { createContext, useEffect, useState } from "react";
 import { App } from "realm-web";
-import RenderPlugins from "../components/RenderPlugins";
 import { useCache, useClearCache } from "react-cache-state";
+import { RenderPlugins } from "..";
 export const RealmContext = createContext({});
 function RealmProvider({ children, appId, plugins, Error401 = (_jsx(_Fragment, { children: _jsx("h1", { children: "dont access 401" }) })), }) {
     const app = new App({ id: appId });
