@@ -13,13 +13,14 @@ export interface user {
 }
 export interface RealmContext<T = any> {
   isLogin: boolean | undefined;
-  setUserRealm: () => void;
+  setUserRealm: (data: any) => void;
   user: (user & T) | undefined;
   Error401: React.ReactNode;
   setUser: (value: any) => void;
   updateUser: (data: any) => Promise<void>;
   login: (data: any) => void;
   logout: () => void;
+  customDataUser: Object;
   userRealm: User<
     Realm.DefaultFunctionsFactory & Realm.BaseFunctionsFactory,
     SimpleObject,
@@ -39,11 +40,13 @@ function RealmProvider<T>({
       <h1>dont access 401</h1>
     </>
   ),
+  customDataUser,
 }: {
   children: ReactNode;
   appId: string;
   Error401?: ReactNode;
   plugins?: any[];
+  customDataUser?: Object;
 }) {
   const app = new App({ id: appId });
   const { clearCache } = useClearCache();
@@ -89,6 +92,7 @@ function RealmProvider<T>({
     logout,
     userRealm,
     app,
+    customDataUser,
     setUserRealm,
   };
   return (

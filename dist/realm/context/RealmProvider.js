@@ -13,7 +13,7 @@ import { App } from "realm-web";
 import { useCache, useClearCache } from "react-cache-state";
 import { RenderPlugins } from "..";
 export const RealmContext = createContext({});
-function RealmProvider({ children, appId, plugins, Error401 = (_jsx(_Fragment, { children: _jsx("h1", { children: "dont access 401" }) })), }) {
+function RealmProvider({ children, appId, plugins, Error401 = (_jsx(_Fragment, { children: _jsx("h1", { children: "dont access 401" }) })), customDataUser, }) {
     const app = new App({ id: appId });
     const { clearCache } = useClearCache();
     const [userRealm, setUserRealm] = useState(app.currentUser);
@@ -56,6 +56,8 @@ function RealmProvider({ children, appId, plugins, Error401 = (_jsx(_Fragment, {
         logout,
         userRealm,
         app,
+        customDataUser,
+        setUserRealm,
     };
     return (_jsx(RealmContext.Provider, { value: data, children: plugins == undefined ? (_jsx(_Fragment, { children: children })) : (_jsx(RenderPlugins, { plugins: plugins, children: children })) }));
 }
