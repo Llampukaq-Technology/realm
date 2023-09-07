@@ -7,19 +7,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
-import { createContext, useEffect, useState } from "react";
+import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
+import { createContext, useEffect, useState, } from "react";
 import { App } from "realm-web";
 import { useCache, useClearCache } from "react-cache-state";
 import { RenderPlugins } from "..";
 export const RealmContext = createContext({});
-function RealmProvider({ children, appId, plugins, Error401 = (_jsx(_Fragment, { children: _jsx("h1", { children: "dont access 401" }) })), customDataUser, }) {
+function RealmProvider({ children, appId, plugins, Error401 = _jsx(_Fragment, { children: "401" }), customDataUser, }) {
     const app = new App({ id: appId });
     const { clearCache } = useClearCache();
     const [userRealm, setUserRealm] = useState(app.currentUser);
     const [user, setUser] = useCache("user");
     const [isLogin, setLogin] = useCache("isLogin", { isLogin: false });
-    const update = (data) => __awaiter(this, void 0, void 0, function* () {
+    useEffect(() => {
+        if (app.currentUser == null || undefined) {
+            logout();
+        }
+        else {
+            app.currentUser.isLoggedIn && setUserRealm(app.currentUser);
+        }
+    }, []);
+    const updateUser = (data) => __awaiter(this, void 0, void 0, function* () {
         var _a;
         const res = yield ((_a = app.currentUser) === null || _a === void 0 ? void 0 : _a.functions.userUsers("update", user === null || user === void 0 ? void 0 : user.userId, data));
         setUser(res);
@@ -38,27 +46,20 @@ function RealmProvider({ children, appId, plugins, Error401 = (_jsx(_Fragment, {
         sessionStorage.clear();
         userRealm === null || userRealm === void 0 ? void 0 : userRealm.logOut();
     };
-    useEffect(() => {
-        if (app.currentUser == null || undefined) {
-            logout();
-        }
-        else {
-            app.currentUser.isLoggedIn && setUserRealm(app.currentUser);
-        }
-    }, []);
     const data = {
-        isLogin: isLogin === null || isLogin === void 0 ? void 0 : isLogin.isLogin,
+        customDataUser,
         user,
-        Error401,
         setUser,
-        updateUser: update,
+        updateUser,
+        isLogin,
+        userRealm,
+        setUserRealm,
+        Error401,
         login,
         logout,
-        userRealm,
         app,
-        customDataUser,
-        setUserRealm,
     };
-    return (_jsx(RealmContext.Provider, { value: data, children: plugins == undefined ? (_jsx(_Fragment, { children: children })) : (_jsx(RenderPlugins, { plugins: plugins, children: children })) }));
+    const R = RealmContext;
+    return (_jsx(R.Provider, { value: Object.assign(Object.assign({}, data), { R }), children: plugins == undefined ? (_jsx(_Fragment, { children: children })) : (_jsx(RenderPlugins, { plugins: plugins, children: children })) }));
 }
 export default RealmProvider;

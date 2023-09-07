@@ -1,6 +1,6 @@
 declare function useAuth(): {
     login: (data: any) => void;
     logout: () => void;
-    customDataUser: Object;
+    customDataUser: Object | undefined;
 };
 export default useAuth;

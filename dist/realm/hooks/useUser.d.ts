@@ -1,5 +1,5 @@
-declare function useUser(): {
-    user: any;
-    updateUser: (data: any) => Promise<void>;
+declare function useUser<T>(): {
+    user: T;
+    updateUser: (data: Partial<T>) => Promise<void>;
 };
 export default useUser;
