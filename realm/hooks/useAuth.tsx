@@ -5,6 +5,7 @@ function useAuth() {
   const { login, logout, customDataUser } = useContext(RealmContext) as {
     login: (data: any) => void;
     logout: () => void;
+
     customDataUser: Object | undefined;
   };
   return { login, logout, customDataUser };

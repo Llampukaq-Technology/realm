@@ -28,7 +28,8 @@ function RealmProvider<T = any>({
   const { clearCache } = useClearCache();
   const [userRealm, setUserRealm] = useState(app.currentUser);
   const [user, setUser] = useCache<T & UserDataRealm>("user");
-  const [isLogin, setLogin] = useCache("isLogin", { isLogin: false });
+  const [isLogin, setLogin] = useState({ isLogin: false });
+  // "isLogin",
   useEffect(() => {
     if (app.currentUser == null || undefined) {
       logout();
@@ -73,16 +74,15 @@ function RealmProvider<T = any>({
     logout,
     app,
   };
-  const R: React.Context<typeof data> = RealmContext;
+
   return (
-    //@ts-ignore
-    <R.Provider value={{ ...data, R }}>
+    <RealmContext.Provider value={data}>
       {plugins == undefined ? (
         <>{children}</>
       ) : (
         <RenderPlugins plugins={plugins}>{children}</RenderPlugins>
       )}
-    </R.Provider>
+    </RealmContext.Provider>
   );
 }
 

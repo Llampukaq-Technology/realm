@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, ReactElement } from "react";
 
 function RenderPlugins({
   plugins,
@@ -7,22 +7,23 @@ function RenderPlugins({
   children: ReactNode;
   plugins?: ReactNode[];
 }) {
-  const renderPluginTree: any = (
+  const renderPluginTree = (
     plugins: ReactNode[] | undefined,
     children: ReactNode
-  ) => {
+  ): ReactNode => {
     if (!plugins || plugins.length === 0) {
-      return null;
+      return children;
     }
     const lastIndex = plugins.length - 1;
-    return plugins.map((Plugin: ReactNode, index) =>
-      React.cloneElement(
-        Plugin as React.ReactElement,
-        {},
-        index === lastIndex
-          ? children
-          : renderPluginTree(plugins[index + 1] as ReactNode[], children)
-      )
+    return plugins.reduceRight(
+      (acc: ReactNode, Plugin: ReactNode, index: number) => {
+        if (index === lastIndex) {
+          return React.cloneElement(Plugin as ReactElement, {}, acc);
+        } else {
+          return React.cloneElement(Plugin as ReactElement, {}, acc);
+        }
+      },
+      children
     );
   };
 

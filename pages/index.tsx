@@ -1,7 +1,11 @@
-import { useUser } from "@/realm";
+import { useAuth } from "@/realm";
 
 export default function Home() {
-  const { user } = useUser();
+  const { logout } = useAuth();
 
-  return <></>;
+  return (
+    <>
+      <button onClick={logout}>sii</button>
+    </>
+  );
 }

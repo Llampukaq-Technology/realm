@@ -18,7 +18,7 @@ function RealmProvider({ children, appId, plugins, Error401 = _jsx(_Fragment, { 
     const { clearCache } = useClearCache();
     const [userRealm, setUserRealm] = useState(app.currentUser);
     const [user, setUser] = useCache("user");
-    const [isLogin, setLogin] = useCache("isLogin", { isLogin: false });
+    const [isLogin, setLogin] = useState({ isLogin: false });
     useEffect(() => {
         if (app.currentUser == null || undefined) {
             logout();
@@ -59,7 +59,6 @@ function RealmProvider({ children, appId, plugins, Error401 = _jsx(_Fragment, { 
         logout,
         app,
     };
-    const R = RealmContext;
-    return (_jsx(R.Provider, { value: Object.assign(Object.assign({}, data), { R }), children: plugins == undefined ? (_jsx(_Fragment, { children: children })) : (_jsx(RenderPlugins, { plugins: plugins, children: children })) }));
+    return (_jsx(RealmContext.Provider, { value: data, children: plugins == undefined ? (_jsx(_Fragment, { children: children })) : (_jsx(RenderPlugins, { plugins: plugins, children: children })) }));
 }
 export default RealmProvider;
