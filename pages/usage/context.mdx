@@ -1,0 +1,55 @@
+# Usar el RealmProvider
+
+Para usar la libreria y todos sus hooks tienes que primero tines que configurar tu Provider
+
+```tsx
+import { RealmProvider } from "@/realm";
+import C from "@/styles/C";
+import Context from "@/styles/Context";
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <RealmProvider
+      Error401={
+        <>
+          <Error401 />
+        </>
+      }
+      customDataUser={{ git: "example@llampukaq.com" }}
+      appId={process.env.NEXT_PUBLIC_APP_ID as string}
+      plugins={[
+        <Context name="example" />,
+        <Context name="example" />,
+        <Context name="example" />,
+      ]}
+    >
+      <Component {...pageProps} />
+    </RealmProvider>
+  );
+}
+```
+
+Ejemplo usando \_app.tsx de nextjs
+
+# Configuraciones
+
+La unica configuracion obligatoria es pasar el AppId, las demas son opcionales
+
+## appId
+
+Este es el appid que provee mongo realm database en su ui o usando su linea de comando
+![Hero](/AppId.webp)
+
+## Error401
+
+Este parametro recibe un componente cuando el usuario ingrese a una pagina que requiera autenticacion
+
+## customDataUser
+
+Este parametro es un objeto que recibe varias confugaraciones cuando un usuario ingrese a la plataforma que se complementa con las funciones realm [Saber mas](/usage/realm)
+
+## plugins
+
+Este es un apartado dedicado a extender la funcionalidad de @llampukaq/realm [Saber mas](/plugins)

@@ -1,0 +1,5 @@
+{
+  "EmailProvider": "Proveedor con email",
+  "GoogleProvider": "Proveedor con google auth",
+  "WriteYourPlugins": "Escribe tus plugins"
+}

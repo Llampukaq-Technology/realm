@@ -1,0 +1,13 @@
+{
+  "index": "Introduction",
+  "installation": "Installation",
+  "usage": "Usage",
+
+  "plugins": "Plugins",
+  "contact": {
+    "title": "About 🚀",
+    "type": "page",
+    "href": "https://www.llampukaq.com/company",
+    "newWindow": true
+  }
+}

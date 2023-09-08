@@ -1,0 +1,43 @@
+# Realm UI
+
+## Mongo Atlas
+
+Se necesita configurar un base de datos llamada user y una colleccion llamada users
+![Hero](/atlas.webp)
+
+## App services
+
+En mongo App Services, primero tienes que configurar las reglas y darle acceso de escribir y leer al servicio
+
+![Hero](/rules.webp)
+
+Despues de esto tienes que crear un funcion que se llame userUsers
+
+![Hero](/createfunction.webp)
+
+Ahora vas a colocar este codigo en la funcion userUsers
+
+```js
+exports = async function (type, id, data) {
+  const userCollection = context.services
+    .get("mongodb-atlas")
+    .db("user")
+    .collection("users");
+  async function getUser() {
+    return await userCollection.findOne({ email: id }, { _id: false });
+  }
+  if (type === "create") {
+    const userExist = await getUser();
+    if (userExist) return userExist;
+    await userCollection.insertOne(data);
+    return await getUser();
+  }
+  if (type === "update") {
+    return await userCollection.findOneAndUpdate(
+      { userId: id },
+      { $set: data },
+      { returnNewDocument: true }
+    );
+  }
+};
+```
