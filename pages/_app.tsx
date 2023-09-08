@@ -7,6 +7,12 @@ import type { AppProps } from "next/app";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <RealmProvider
+      Error401={
+        <>
+          <Error401 />
+        </>
+      }
+      customDataUser={{ git: "example@llampukaq.com" }}
       appId={"backend-llk-nlhkq"}
       plugins={[
         <Context name="si" />,

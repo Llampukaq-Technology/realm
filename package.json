@@ -1,6 +1,28 @@
 {
   "name": "@llampukaq/realm",
-  "version": "0.2.3",
+  "version": "0.2.5",
+  "license": "MIT",
+  "description": "Usa mongo realm de manera sencilla con react",
+  "homepage": "https://realm.llampukaq.com/",
+  "sponsor": {
+    "url": "https://www.llampukaq.com/"
+  },
+  "repository": {
+    "directory": "",
+    "type": "github",
+    "url": "https://github.com/LlampuKaq-Tecnology/realm"
+  },
+  "keywords": [
+    "realm",
+    "database",
+    "react",
+    "db"
+  ],
+  "author": {
+    "email": "llampukaq@llampukaq",
+    "name": "Llampukaq technology",
+    "url": "https://www.llampukaq.com/"
+  },
   "main": "dist/realm/index.js",
   "typings": "dist/realm/index.d.ts",
   "publishConfig": {
