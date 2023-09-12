@@ -12,4 +12,5 @@ export interface UserInitialData {
     name?: string;
     picture?: string;
 }
+export type UserGeneric<T = {}> = UserInitialData & T;
 export type UserDataRealm<T = {}> = UserInitialData & T;

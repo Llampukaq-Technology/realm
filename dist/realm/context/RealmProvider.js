@@ -13,7 +13,7 @@ import { App } from "realm-web";
 import { useCache, useClearCache } from "react-cache-state";
 import { RenderPlugins } from "..";
 export const RealmContext = createContext({});
-function RealmProvider({ children, appId, plugins, Error401 = _jsx(_Fragment, { children: "401" }), customDataUser, }) {
+function RealmProvider({ children, appId, plugins, Error401 = _jsx(_Fragment, { children: "Error 401" }), customDataUser, }) {
     const app = new App({ id: appId });
     const { clearCache } = useClearCache();
     const [userRealm, setUserRealm] = useState(app.currentUser);
@@ -24,7 +24,10 @@ function RealmProvider({ children, appId, plugins, Error401 = _jsx(_Fragment, { 
             logout();
         }
         else {
-            app.currentUser.isLoggedIn && setUserRealm(app.currentUser);
+            if (app.currentUser.isLoggedIn) {
+                setLogin({ isLogin: true });
+                setUserRealm(app.currentUser);
+            }
         }
     }, []);
     const updateUser = (data) => __awaiter(this, void 0, void 0, function* () {

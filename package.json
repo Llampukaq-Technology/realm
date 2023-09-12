@@ -1,6 +1,6 @@
 {
   "name": "@llampukaq/realm",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "license": "MIT",
   "description": "Usa mongo realm de manera sencilla con react",
   "homepage": "https://realm.llampukaq.com/",
@@ -31,22 +31,25 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "npx tsc -p tsconfig-components.json ",
+    "build": "npx tsc -p tsconfig-components.json",
     "lint": "next lint"
   },
   "dependencies": {
+    "nanoid": "^4.0.2",
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-cache-state": "^1.8.0",
+    "react-dom": "18.2.0",
+    "realm-web": "^2.0.0"
+  },
+  "devDependencies": {
+    "cllk": "^1.8.6",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
-    "next": "13.4.19",
     "postcss": "8.4.29",
-    "react": "18.2.0",
-    "react-cache-state": "^1.8.0",
-    "react-dom": "18.2.0",
-    "realm-web": "^2.0.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
-  },
-  "devDependencies": {}
+  }
 }

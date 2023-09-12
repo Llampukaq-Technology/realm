@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { RealmContext } from "../context/RealmProvider";
 import { User } from "realm-web";
 

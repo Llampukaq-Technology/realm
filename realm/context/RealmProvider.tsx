@@ -16,7 +16,7 @@ function RealmProvider<T = any>({
   children,
   appId,
   plugins,
-  Error401 = <>401</>,
+  Error401 = <>Error 401</>,
   customDataUser,
 }: PropsWithChildren<{
   appId: string;
@@ -29,12 +29,15 @@ function RealmProvider<T = any>({
   const [userRealm, setUserRealm] = useState(app.currentUser);
   const [user, setUser] = useCache<T & UserDataRealm>("user");
   const [isLogin, setLogin] = useState({ isLogin: false });
-  // "isLogin",
+
   useEffect(() => {
     if (app.currentUser == null || undefined) {
       logout();
     } else {
-      app.currentUser.isLoggedIn && setUserRealm(app.currentUser);
+      if (app.currentUser.isLoggedIn) {
+        setLogin({ isLogin: true });
+        setUserRealm(app.currentUser);
+      }
     }
   }, []);
   const updateUser = async (data: any) => {

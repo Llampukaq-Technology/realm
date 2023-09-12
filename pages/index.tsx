@@ -1,11 +1,11 @@
-import { useAuth } from "@/realm";
+import { RealmAccess } from "@/realm";
+import { Button, H1 } from "cllk";
 
 export default function Home() {
-  const { logout } = useAuth();
-
   return (
-    <>
-      <button onClick={logout}>sii</button>
-    </>
+    <RealmAccess>
+      <H1>si</H1>
+      <Button>sii</Button>
+    </RealmAccess>
   );
 }
