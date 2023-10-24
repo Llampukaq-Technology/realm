@@ -4,14 +4,14 @@
 /node_modules
 /.pnp
 .pnp.js
-/dist
+/dist/realm
 # testing
 /coverage
-
+dist/realm
 # next.js
 /.next/
 /out/
-
+/dist
 # production
 /build
 
