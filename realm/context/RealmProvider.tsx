@@ -6,10 +6,9 @@ import React, {
   useState,
 } from "react";
 import { App } from "realm-web";
-
-import { useCache, useClearCache } from "react-cache-state";
 import { RenderPlugins } from "..";
 import { UserDataRealm } from "../types";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export const RealmContext = createContext<any>({});
 function RealmProvider<T = any>({
@@ -25,17 +24,18 @@ function RealmProvider<T = any>({
   customDataUser?: Object;
 }>) {
   const app = new App({ id: appId });
-  const { clearCache } = useClearCache();
   const [userRealm, setUserRealm] = useState(app.currentUser);
-  const [user, setUser] = useCache<T & UserDataRealm>("user");
-  const [isLogin, setLogin] = useState({ isLogin: false });
+  const [user, setUser] = useLocalStorage<(T & UserDataRealm) | undefined>(
+    "user"
+  );
+  const [isLogin, setLogin] = useState<boolean>(false);
 
   useEffect(() => {
     if (app.currentUser == null || undefined) {
       logout();
     } else {
       if (app.currentUser.isLoggedIn) {
-        setLogin({ isLogin: true });
+        setLogin(true);
         setUserRealm(app.currentUser);
       }
     }
@@ -43,7 +43,6 @@ function RealmProvider<T = any>({
   const updateUser = async (data: any) => {
     const res = await app.currentUser?.functions.userUsers(
       "update",
-
       user?.userId,
       data
     );
@@ -52,13 +51,12 @@ function RealmProvider<T = any>({
   const login = (data: any) => {
     setUserRealm(app.currentUser);
     setUser(data);
-    setLogin({ isLogin: true });
+    setLogin(true);
   };
   const logout = () => {
     setUserRealm(null);
     setUser(undefined);
-    setLogin({ isLogin: false });
-    clearCache();
+    setLogin(false);
     localStorage.clear();
     sessionStorage.clear();
     userRealm?.logOut();

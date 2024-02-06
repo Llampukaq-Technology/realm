@@ -7,7 +7,7 @@ function RealmAccess({ children }: PropsWithChildren) {
     isLogin: { isLogin: boolean };
   };
 
-  return <>{isLogin.isLogin ? children : <>{Error401}</>}</>;
+  return <>{isLogin ? children : <>{Error401}</>}</>;
 }
 
 export default RealmAccess;
