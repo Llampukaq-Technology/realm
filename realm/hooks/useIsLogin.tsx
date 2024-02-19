@@ -5,7 +5,7 @@ function useIsLogin() {
   const { isLogin } = useContext(RealmContext) as {
     isLogin: { isLogin: boolean };
   };
-  return { isLogin: isLogin.isLogin };
+  return { isLogin };
 }
 
 export default useIsLogin;

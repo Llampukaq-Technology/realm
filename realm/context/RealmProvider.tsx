@@ -22,6 +22,7 @@ function RealmProvider<T = any>({
   Error401?: ReactNode;
   plugins?: any[];
   customDataUser?: Object;
+  onlyUser?: string[];
 }>) {
   const app = new App({ id: appId });
   const [userRealm, setUserRealm] = useState(app.currentUser);
