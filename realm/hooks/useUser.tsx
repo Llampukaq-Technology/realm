@@ -1,13 +1,9 @@
-import { useContext } from "react";
-import { RealmContext } from "../context/RealmProvider";
+import { useUs } from "../context/UserProvider";
 
 function useUser<T>() {
-  
-  const { user, updateUser } = useContext(RealmContext) as {
-    user: T;
-    updateUser: (data: Partial<T>) => Promise<void>;
-  };
-  return { user, updateUser };
+  const { user, updateUser } = useUs();
+  const g = user as T;
+  return { user: g, updateUser };
 }
 
 export default useUser;

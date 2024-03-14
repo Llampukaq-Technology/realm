@@ -2,7 +2,7 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 import React, { ReactNode, createContext, useContext, useEffect } from "react";
 import { useRe } from "./RealmProvider";
 import {
-  UserDataRealm,
+  UserGeneric,
   UserInitialData,
   useCollection,
   useIsLogin,
@@ -22,23 +22,22 @@ export const useUs = () => {
 function UserProvider<T>({ children }: { children: ReactNode }) {
   const { setLogin } = useIsLogin();
   const { app, setUserRealm, userRealm } = useRe();
-  const [user, setUser] = useLocalStorage<(T & UserDataRealm) | undefined>(
+  const [user, setUser] = useLocalStorage<(T & UserGeneric) | undefined>(
     "user"
   );
-
   const collection = useCollection("user", "users");
-  useSync<UserDataRealm & T>(collection, ["update"], (set, documentUser) => {
+  useSync<UserGeneric & T>(collection, ["update"], (set, documentUser) => {
     if (documentUser.userId == user?.userId) {
       setUser(documentUser);
     }
   });
   useEffect(() => {
-    if (app.currentUser == null || undefined) {
+    if (app?.currentUser == null || undefined) {
       logout();
     } else {
-      if (app.currentUser.isLoggedIn) {
+      if (app?.currentUser.isLoggedIn) {
         setLogin(true);
-        setUserRealm(app.currentUser);
+        setUserRealm(app?.currentUser);
       }
     }
   }, []);
@@ -49,10 +48,11 @@ function UserProvider<T>({ children }: { children: ReactNode }) {
     );
   };
   const login = (data: any) => {
-    setUserRealm(app.currentUser);
+    setUserRealm(app?.currentUser);
     setUser(data);
     setLogin(true);
   };
+
   const logout = () => {
     setUserRealm(null);
     setUser(undefined);

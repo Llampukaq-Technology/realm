@@ -14,7 +14,6 @@ function useCollection<T>(
   mongoClient: string = "mongodb-atlas"
 ) {
   const app = useApp();
-
   const c = app?.currentUser
     ?.mongoClient(mongoClient)
     .db(db)

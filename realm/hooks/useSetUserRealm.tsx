@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
-import { RealmContext } from "../context/RealmProvider";
+import { useRe } from "../context/RealmProvider";
+import { useUs } from "../context/UserProvider";
 
 function useSetUserRealm() {
-  const { setUserRealm, setUser } = useContext(RealmContext) as {
-    setUser: () => void;
-    setUserRealm: () => void;
-  };
+  const { setUserRealm } = useRe();
+  const { setUser } = useUs();
   return { setUserRealm, setUser };
 }
 

@@ -5,7 +5,6 @@ import UserProvider from "./UserProvider";
 
 function RealmProvider({
   children,
-
   ...props
 }: PropsWithChildren<{
   appId: string;

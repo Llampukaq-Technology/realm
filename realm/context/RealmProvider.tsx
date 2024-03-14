@@ -6,8 +6,7 @@ import React, {
   useState,
 } from "react";
 import { App, User } from "realm-web";
-import { RenderPlugins, useIsLogin } from "..";
-
+import { RenderPlugins } from "..";
 export const RealmContext = createContext<any>({});
 export const useRe = () => {
   return useContext(RealmContext) as {
@@ -45,7 +44,7 @@ function RealmProviderr<T = any>({
   onlyUser?: string[];
 }>) {
   const app = new App({ id: appId });
-  const [userRealm, setUserRealm] = useState(app.currentUser);
+  const [userRealm, setUserRealm] = useState(app?.currentUser);
   const data = {
     customDataUser,
     userRealm,

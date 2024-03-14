@@ -1,10 +1,4 @@
-import {
-  Credentials,
-  useApp,
-  useAuth,
-  useSetUserRealm,
-  useUser,
-} from "@/realm";
+import { Credentials, useApp, useAuth, useSetUserRealm } from "@/realm";
 import { Button, H1 } from "cllk";
 export default function Home() {
   const app = useApp();
@@ -22,7 +16,6 @@ export default function Home() {
     login(userData);
     return { userRealm: user, userData };
   }
-
   return (
     <>
       <H1>si</H1>
