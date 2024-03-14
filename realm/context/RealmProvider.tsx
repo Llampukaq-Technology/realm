@@ -2,16 +2,36 @@ import React, {
   PropsWithChildren,
   ReactNode,
   createContext,
-  useEffect,
+  useContext,
   useState,
 } from "react";
-import { App } from "realm-web";
-import { RenderPlugins } from "..";
-import { UserDataRealm } from "../types";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import { App, User } from "realm-web";
+import { RenderPlugins, useIsLogin } from "..";
 
 export const RealmContext = createContext<any>({});
-function RealmProvider<T = any>({
+export const useRe = () => {
+  return useContext(RealmContext) as {
+    customDataUser: Object;
+    userRealm: User<
+      Realm.DefaultFunctionsFactory & Realm.BaseFunctionsFactory,
+      SimpleObject,
+      Realm.DefaultUserProfileData
+    > | null;
+    setUserRealm: React.Dispatch<
+      React.SetStateAction<User<
+        Realm.DefaultFunctionsFactory & Realm.BaseFunctionsFactory,
+        SimpleObject,
+        Realm.DefaultUserProfileData
+      > | null>
+    >;
+    Error401: ReactNode;
+    app: App<
+      Realm.DefaultFunctionsFactory & Realm.BaseFunctionsFactory,
+      SimpleObject
+    >;
+  };
+};
+function RealmProviderr<T = any>({
   children,
   appId,
   plugins,
@@ -26,54 +46,11 @@ function RealmProvider<T = any>({
 }>) {
   const app = new App({ id: appId });
   const [userRealm, setUserRealm] = useState(app.currentUser);
-  const [user, setUser] = useLocalStorage<(T & UserDataRealm) | undefined>(
-    "user"
-  );
-  const [isLogin, setLogin] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (app.currentUser == null || undefined) {
-      logout();
-    } else {
-      if (app.currentUser.isLoggedIn) {
-        setLogin(true);
-        setUserRealm(app.currentUser);
-      }
-    }
-  }, []);
-  const updateUser = async (data: any) => {
-    const res = await app.currentUser?.functions.userUsers(
-      "update",
-      user?.userId,
-      data
-    );
-    setUser(res);
-  };
-  const login = (data: any) => {
-    setUserRealm(app.currentUser);
-    setUser(data);
-    setLogin(true);
-  };
-  const logout = () => {
-    setUserRealm(null);
-    setUser(undefined);
-    setLogin(false);
-    localStorage.clear();
-    sessionStorage.clear();
-    userRealm?.logOut();
-  };
-
   const data = {
     customDataUser,
-    user,
-    setUser,
-    updateUser,
-    isLogin,
     userRealm,
     setUserRealm,
     Error401,
-    login,
-    logout,
     app,
   };
 
@@ -88,4 +65,4 @@ function RealmProvider<T = any>({
   );
 }
 
-export default RealmProvider;
+export default RealmProviderr;

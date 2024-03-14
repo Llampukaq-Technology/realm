@@ -1,11 +1,10 @@
 import React, { PropsWithChildren, ReactNode, useContext } from "react";
-import { RealmContext } from "../context/RealmProvider";
+import { useRe } from "../context/RealmProvider";
+import { useIsLogin } from "..";
 
 function RealmAccess({ children }: PropsWithChildren) {
-  const { Error401, isLogin } = useContext(RealmContext) as {
-    Error401: ReactNode;
-    isLogin: { isLogin: boolean };
-  };
+  const { isLogin } = useIsLogin();
+  const { Error401 } = useRe();
 
   return <>{isLogin ? children : <>{Error401}</>}</>;
 }

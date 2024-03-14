@@ -1,14 +1,10 @@
-import { useContext } from "react";
-import { RealmContext } from "../context/RealmProvider";
+import { useRe } from "../context/RealmProvider";
 import { nanoid } from "nanoid";
+import { useUs } from "../context/UserProvider";
 
 function useAuth() {
-  const { login, logout, customDataUser } = useContext(RealmContext) as {
-    login: (data: any) => void;
-    logout: () => void;
-
-    customDataUser: Object | undefined;
-  };
+  const { login, logout } = useUs();
+  const { customDataUser } = useRe();
   function parseLanguageTag(languageTag: string) {
     const [language, country] = languageTag.split("-");
     return {

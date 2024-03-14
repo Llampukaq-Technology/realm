@@ -1,15 +1,8 @@
-import { useContext } from "react";
-import { RealmContext } from "../context/RealmProvider";
-import { User } from "realm-web";
+import { useRe } from "../context/RealmProvider";
 
 function useUserRealm() {
-  const { userRealm } = useContext(RealmContext) as {
-    userRealm: User<
-      Realm.DefaultFunctionsFactory & Realm.BaseFunctionsFactory,
-      SimpleObject,
-      Realm.DefaultUserProfileData
-    > | null;
-  };
+  const { userRealm } = useRe();
+
   return { userRealm };
 }
 

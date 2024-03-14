@@ -1,4 +1,4 @@
-import useUserRealm from "./useUserRealm";
+import { useApp } from ".";
 
 /**
  * Hook para obtener una colección de MongoDB en el contexto de una aplicación Realm.
@@ -13,8 +13,12 @@ function useCollection<T>(
   collection: string,
   mongoClient: string = "mongodb-atlas"
 ) {
-  const { userRealm } = useUserRealm();
-  const c = userRealm?.mongoClient(mongoClient).db(db).collection(collection);
+  const app = useApp();
+
+  const c = app?.currentUser
+    ?.mongoClient(mongoClient)
+    .db(db)
+    .collection(collection);
   return c;
 }
 

@@ -1,20 +1,38 @@
-import { useCollection } from "@/realm";
-import useSync from "@/realm/hooks/useSync";
+import {
+  Credentials,
+  useApp,
+  useAuth,
+  useSetUserRealm,
+  useUser,
+} from "@/realm";
 import { Button, H1 } from "cllk";
 export default function Home() {
-  const collection = useCollection("r", "");
-  const { data } = useSync<{ holi: string }>(
-    collection,
-    ["update"],
-    (set, document) => {
-      document.holi == "user" && set(document);
-    }
-  );
-  console.log(data);
+  const app = useApp();
+  const { login, createUserData } = useAuth();
+  const { setUserRealm } = useSetUserRealm();
+  async function loginEmail(email: string, password: string) {
+    const credentials = Credentials.emailPassword(email, password);
+    const user = await app.logIn(credentials);
+    const userData = await user.functions.userUsers(
+      "create",
+      email,
+      createUserData({ email })
+    ); //@ts-ignore
+    setUserRealm(user);
+    login(userData);
+    return { userRealm: user, userData };
+  }
+
   return (
     <>
       <H1>si</H1>
-      <Button>sii</Button>
+      <Button
+        onClick={async () => {
+          await loginEmail("luisgarrido0987@gmail.com", "123456");
+        }}
+      >
+        sii
+      </Button>
     </>
   );
 }

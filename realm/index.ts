@@ -1,6 +1,6 @@
 export * from "./hooks";
 export * from "./components";
-import RealmProvider from "./context/RealmProvider";
+import RealmProvider from "./context";
 export { Credentials, User } from "realm-web";
 export { RealmProvider };
 
