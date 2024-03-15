@@ -19,7 +19,13 @@ export const useUs = () => {
     setUser: React.Dispatch<React.SetStateAction<UserInitialData | undefined>>;
   };
 };
-function UserProvider<T>({ children }: { children: ReactNode }) {
+function UserProvider<T>({
+  children,
+  onlyUser,
+}: {
+  children: ReactNode;
+  onlyUser?: string[];
+}) {
   const { setLogin } = useIsLogin();
   const { app, setUserRealm, userRealm } = useRe();
   const [user, setUser] = useLocalStorage<(T & UserGeneric) | undefined>(
@@ -48,9 +54,20 @@ function UserProvider<T>({ children }: { children: ReactNode }) {
     );
   };
   const login = (data: any) => {
-    setUserRealm(app?.currentUser);
-    setUser(data);
-    setLogin(true);
+    if (onlyUser != undefined) {
+      if (onlyUser?.includes(data.email)) {
+        console.log("si");
+        setUserRealm(app?.currentUser);
+        setUser(data);
+        setLogin(true);
+      } else {
+        logout?.();
+      }
+    } else {
+      setUserRealm(app?.currentUser);
+      setUser(data);
+      setLogin(true);
+    }
   };
 
   const logout = () => {

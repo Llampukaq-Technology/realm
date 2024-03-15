@@ -5,6 +5,7 @@ import UserProvider from "./UserProvider";
 
 function RealmProvider({
   children,
+  onlyUser,
   ...props
 }: PropsWithChildren<{
   appId: string;
@@ -16,7 +17,7 @@ function RealmProvider({
   return (
     <LoginProvider>
       <RealmProviderr {...props}>
-        <UserProvider>{children}</UserProvider>
+        <UserProvider onlyUser={onlyUser}>{children}</UserProvider>
       </RealmProviderr>
     </LoginProvider>
   );

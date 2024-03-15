@@ -8,6 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider>
       <RealmProvider
+        onlyUser={["luisgarrido0987@gmail.com"]}
         Error401={<Error401 />}
         appId={process.env.NEXT_PUBLIC_REALM as string}
       >

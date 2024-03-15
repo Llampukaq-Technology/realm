@@ -1,6 +1,6 @@
 {
   "name": "@llampukaq/realm",
-  "version": "0.2.726",
+  "version": "0.2.728",
   "license": "MIT",
   "description": "Usa mongo realm de manera sencilla con react",
   "homepage": "https://realm.llampukaq.com/",
