@@ -37,6 +37,12 @@ function UserProvider<T>({
       setUser(documentUser);
     }
   });
+  const find = async () => {
+    const res = await collection?.findOne({ userId: user?.userId });
+    if (res != undefined) {
+      setUser(res);
+    }
+  };
   useEffect(() => {
     if (app?.currentUser == null || undefined) {
       logout();
@@ -44,6 +50,7 @@ function UserProvider<T>({
       if (app?.currentUser.isLoggedIn) {
         setLogin(true);
         setUserRealm(app?.currentUser);
+        find();
       }
     }
   }, []);
@@ -56,7 +63,6 @@ function UserProvider<T>({
   const login = (data: any) => {
     if (onlyUser != undefined) {
       if (onlyUser?.includes(data.email)) {
-        console.log("si");
         setUserRealm(app?.currentUser);
         setUser(data);
         setLogin(true);
@@ -70,13 +76,14 @@ function UserProvider<T>({
     }
   };
 
-  const logout = () => {
+  const logout = (callback?: () => void) => {
     setUserRealm(null);
     setUser(undefined);
     setLogin(false);
-    localStorage.clear();
+    localStorage.removeItem("user");
     sessionStorage.clear();
     userRealm?.logOut();
+    callback?.();
   };
   const value = {
     logout,

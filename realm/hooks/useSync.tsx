@@ -13,7 +13,19 @@ function useSync<T>(
     | "dropDatabase"
     | "invalidate"
   >,
-  onChange?: (fn: Dispatch<SetStateAction<T>>, document: T) => any
+  onChange?: (
+    fn: Dispatch<SetStateAction<T>>,
+    document: T,
+    operationType?:
+      | "insert"
+      | "delete"
+      | "replace"
+      | "update"
+      | "drop"
+      | "rename"
+      | "dropDatabase"
+      | "invalidate"
+  ) => any
 ) {
   const { isLogin } = useIsLogin();
   const [data, setData] = useState<T>();
@@ -23,15 +35,15 @@ function useSync<T>(
         const bo = operationType.includes(change.operationType);
         if (bo) {
           //@ts-ignore
-          onChange?.(setData, change.fullDocument as T);
+          onChange?.(setData, change.fullDocument as T, change.operationType);
         }
       }
     }
   };
 
   useEffect(() => {
-    sync();
-  }, [isLogin]);
+    isLogin && sync();
+  }, [isLogin, collection]);
   return { data };
 }
 
