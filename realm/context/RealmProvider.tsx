@@ -3,6 +3,7 @@ import React, {
   ReactNode,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { App, User } from "realm-web";
@@ -45,6 +46,9 @@ function RealmProviderr<T = any>({
 }>) {
   const app = new App({ id: appId });
   const [userRealm, setUserRealm] = useState(app?.currentUser);
+  useEffect(() => {
+    setUserRealm(app.currentUser);
+  }, [app.currentUser?.id]);
   const data = {
     customDataUser,
     userRealm,

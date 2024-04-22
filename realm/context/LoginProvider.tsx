@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { createProviderFn } from "../react";
+import { useLocalStorage } from "@uidotdev/usehooks";
 const useLogin = () => {
-  const [isLogin, setLogin] = useState<boolean>(false);
+  const [isLogin, setLogin] = useLocalStorage<boolean>("isLogin", false);
   return { isLogin, setLogin };
 };
 const [LoginProvider, useIsLogin] = createProviderFn<typeof useLogin>(useLogin);

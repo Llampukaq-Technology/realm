@@ -26,7 +26,7 @@ function UserProvider<T>({
   children: ReactNode;
   onlyUser?: string[];
 }) {
-  const { setLogin } = useIsLogin();
+  const { setLogin, isLogin } = useIsLogin();
   const { app, setUserRealm, userRealm } = useRe();
   const [user, setUser] = useLocalStorage<(T & UserGeneric) | undefined>(
     "user"
@@ -39,17 +39,16 @@ function UserProvider<T>({
   });
   const find = async () => {
     const res = await collection?.findOne({ userId: user?.userId });
-    if (res != undefined) {
-      setUser(res);
-    }
+    if (res != undefined) setUser(res);
   };
   useEffect(() => {
     if (app?.currentUser == null || undefined) {
       logout();
     } else {
       if (app?.currentUser.isLoggedIn) {
-        setLogin(true);
-        setUserRealm(app?.currentUser);
+        if (!isLogin) {
+          setLogin(true);
+        }
         find();
       }
     }
@@ -81,6 +80,7 @@ function UserProvider<T>({
     setUser(undefined);
     setLogin(false);
     localStorage.removeItem("user");
+    localStorage.removeItem("isLogin");
     sessionStorage.clear();
     userRealm?.logOut();
     callback?.();

@@ -1,50 +1,39 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useIsLogin } from ".";
-
+type op =
+  | "insert"
+  | "delete"
+  | "replace"
+  | "update"
+  | "drop"
+  | "rename"
+  | "dropDatabase"
+  | "invalidate";
 function useSync<T>(
   collection: Realm.Services.MongoDB.MongoDBCollection<any> | undefined,
-  operationType: Array<
-    | "insert"
-    | "delete"
-    | "replace"
-    | "update"
-    | "drop"
-    | "rename"
-    | "dropDatabase"
-    | "invalidate"
-  >,
-  onChange?: (
-    fn: Dispatch<SetStateAction<T>>,
-    document: T,
-    operationType?:
-      | "insert"
-      | "delete"
-      | "replace"
-      | "update"
-      | "drop"
-      | "rename"
-      | "dropDatabase"
-      | "invalidate"
-  ) => any
+  operationType: Array<op>,
+  onChange?: (fn: op, document: T, operationType?: op) => any
 ) {
   const { isLogin } = useIsLogin();
-  const [data, setData] = useState<T>();
   const sync = async () => {
-    if (collection != undefined && isLogin) {
+    if (collection != undefined) {
       for await (const change of collection?.watch()) {
         const bo = operationType.includes(change.operationType);
         if (bo) {
-          //@ts-ignore
-          onChange?.(setData, change.fullDocument as T, change.operationType);
+          onChange?.(
+            change.operationType,
+            //@ts-ignore
+            change.fullDocument as T,
+            change.operationType
+          );
+          return;
         }
       }
     }
   };
-
   useEffect(() => {
     isLogin && sync();
-  }, [isLogin, collection]);
-  return { data };
+  }, [collection, isLogin]);
 }
 
 export default useSync;
