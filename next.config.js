@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages:["cllk"]
+  transpilePackages:["cllk","@llampukaq/icons"]
 }
 
 module.exports = nextConfig

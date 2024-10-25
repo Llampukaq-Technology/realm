@@ -1,4 +1,4 @@
-import React, {
+import {
   PropsWithChildren,
   ReactNode,
   createContext,
@@ -67,5 +67,4 @@ function RealmProviderr<T = any>({
     </RealmContext.Provider>
   );
 }
-
 export default RealmProviderr;
