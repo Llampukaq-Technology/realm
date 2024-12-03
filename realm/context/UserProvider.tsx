@@ -1,4 +1,3 @@
-import { useLocalStorage } from "@uidotdev/usehooks";
 import React, { ReactNode, createContext, useContext, useEffect } from "react";
 import { useRe } from "./RealmProvider";
 import {
@@ -8,6 +7,8 @@ import {
   useIsLogin,
   useSync,
 } from "..";
+import { useLocalStorage } from "@uidotdev/usehooks";
+
 //@ts-ignore
 const userContext = createContext();
 export const useUs = () => {
@@ -29,7 +30,8 @@ function UserProvider<T>({
   const { setLogin, isLogin } = useIsLogin();
   const { app, setUserRealm, userRealm } = useRe();
   const [user, setUser] = useLocalStorage<(T & UserGeneric) | undefined>(
-    "user"
+    "user",
+    undefined
   );
   const collection = useCollection("user", "users");
   useSync<UserGeneric & T>(collection, ["update"], (set, documentUser) => {

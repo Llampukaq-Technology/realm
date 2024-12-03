@@ -1,6 +1,6 @@
 {
   "name": "@llampukaq/realm",
-  "version": "0.2.738",
+  "version": "0.2.740",
   "license": "MIT",
   "description": "Usa mongo realm de manera sencilla con react",
   "homepage": "https://realm.llampukaq.com/",
@@ -36,8 +36,8 @@
   },
   "dependencies": {
     "@uidotdev/usehooks": "^2.4.1",
-    "nanoid": "^4.0.2",
-    "next": "^14.2.15",
+    "nanoid": "4.0.2",
+    "next": "14.2.15",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "realm-web": "2.0.0"
@@ -47,7 +47,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
-    "cllk": "^2.1.67",
+    "cllk": "2.1.67",
     "postcss": "8.4.29",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"

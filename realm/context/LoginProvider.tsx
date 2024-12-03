@@ -1,5 +1,5 @@
-import { createProviderFn } from "../react";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { createProviderFn } from "../react";
 const useLogin = () => {
   const [isLogin, setLogin] = useLocalStorage<boolean>("isLogin", false);
   return { isLogin, setLogin };
